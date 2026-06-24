@@ -644,7 +644,7 @@
           </div>
 
           <!-- Login Form submission -->
-          <form class="needs-validation" novalidate method="POST" action="#">
+          <form class="needs-validation" novalidate method="POST" action="{{ route('authenticate') }}">
             @csrf
 
             <!-- Form Validation Alerts -->
@@ -660,9 +660,9 @@
 
             <!-- Username Field -->
             <div class="custom-input-group">
-              <input type="text" name="username" class="custom-control" id="yourUsername" placeholder="Username / Email" required value="{{ old('username') }}">
+              <input type="email" name="email" class="custom-control" id="yourUsername" placeholder="Email" required value="{{ old('email') }}">
               <i class="bi bi-person"></i>
-              <div class="invalid-feedback">Harap isi username atau email Anda.</div>
+              <div class="invalid-feedback">Harap isi email Anda.</div>
             </div>
 
             <!-- Password Field -->

@@ -31,6 +31,9 @@
     <!-- Template Main CSS File -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 
+    {{--  datatables CSS  --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.bootstrap5.css">
+
 
 </head>
 
@@ -40,6 +43,8 @@
     @include('layouts.dashboard.sidebar')
 
     <main id="main" class="main">
+        @include('sweetalert::alert')
+
         @yield('content')
     </main><!-- End #main -->
 
@@ -60,6 +65,14 @@
 
     <!-- Template Main JS File -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
+
+    {{-- datatables --}}
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.3.4/js/dataTables.bootstrap5.js"></script>
+
+    <!--fontawesome -->
+    <script src="https://kit.fontawesome.com/63b8672806.js" crossorigin="anonymous"></script>
 
     @stack('scripts')
     @stack('styles')

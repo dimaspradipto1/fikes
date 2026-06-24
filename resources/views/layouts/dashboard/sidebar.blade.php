@@ -190,6 +190,13 @@
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('user.*') ? '' : 'collapsed' }}" href="{{ route('user.index') }}">
+          <i class="bi bi-people"></i>
+          <span>Data Pengguna</span>
+        </a>
+      </li><!-- End Data Pengguna Nav -->
+
+      <li class="nav-item">
         <a class="nav-link collapsed" href="pages-faq.html">
           <i class="bi bi-question-circle"></i>
           <span>F.A.Q</span>
@@ -206,7 +213,7 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-register.html">
           <i class="bi bi-card-list"></i>
-          <span>Register</span>
+          <span>Data Role akses</span>
         </a>
       </li><!-- End Register Page Nav -->
 
