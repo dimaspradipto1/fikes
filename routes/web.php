@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KontakController;
+use App\Http\Controllers\SambutanDekanController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,13 +29,15 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
         return view('layouts.dashboard.index');
     })->name('dashboard');
 
-    // Resource User (index, create, store, show, edit, update, destroy)
     Route::resource('user', UserController::class);
-
-    // Resource Kontak (index, create, store, edit, update, destroy)
     Route::resource('kontak', KontakController::class)->except(['show']);
 
-    // Update Password — route tambahan di luar resource
+    Route::resource('sambutan-dekan', SambutanDekanController::class)->except(['show']);
+
+    Route::post('sambutan-dekan/upload-image', [SambutanDekanController::class, 'uploadImage'])
+        ->name('sambutan-dekan.uploadImage');
+
+
     Route::get('user/{user}/update-password', [UserController::class, 'updatePasswordForm'])
         ->name('user.updatePasswordForm');
     Route::put('user/{user}/update-password', [UserController::class, 'updatePassword'])

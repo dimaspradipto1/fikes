@@ -6,5 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class SambutanDekan extends Model
 {
-    //
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'url_photo',
+        'url_video',
+        'judul',
+        'deskripsi',
+    ];
 }
