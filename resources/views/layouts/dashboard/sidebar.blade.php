@@ -204,11 +204,11 @@
       </li><!-- End F.A.Q Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-contact.html">
+        <a class="nav-link {{ request()->routeIs('kontak.*') ? '' : 'collapsed' }}" href="{{ route('kontak.index') }}">
           <i class="bi bi-envelope"></i>
-          <span>Contact</span>
+          <span>Data Kontak</span>
         </a>
-      </li><!-- End Contact Page Nav -->
+      </li><!-- End Data Kontak Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-register.html">

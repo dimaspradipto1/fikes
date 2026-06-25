@@ -2,64 +2,68 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\KontakDataTable;
+use App\Http\Requests\KontakRequest;
 use App\Models\Kontak;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class KontakController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Tampilkan daftar kontak dengan DataTables.
      */
-    public function index()
+    public function index(KontakDataTable $dataTable)
     {
-        //
+        return $dataTable->render('pages.kontak.index');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Tampilkan form tambah kontak.
      */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('pages.kontak.create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Simpan kontak baru ke database.
      */
-    public function store(Request $request)
+    public function store(KontakRequest $request): RedirectResponse
     {
-        //
+        Kontak::create($request->validated());
+
+        toast('Data kontak berhasil ditambahkan.', 'success');
+        return redirect()->route('kontak.index');
     }
 
     /**
-     * Display the specified resource.
+     * Tampilkan form edit kontak.
      */
-    public function show(Kontak $kontak)
+    public function edit(Kontak $kontak): View
     {
-        //
+        return view('pages.kontak.edit', compact('kontak'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Simpan perubahan data kontak.
      */
-    public function edit(Kontak $kontak)
+    public function update(KontakRequest $request, Kontak $kontak): RedirectResponse
     {
-        //
+        $kontak->update($request->validated());
+
+        toast('Data kontak berhasil diperbarui.', 'success');
+        return redirect()->route('kontak.index');
     }
 
     /**
-     * Update the specified resource in storage.
+     * Hapus kontak dari database.
      */
-    public function update(Request $request, Kontak $kontak)
+    public function destroy(Kontak $kontak): RedirectResponse
     {
-        //
-    }
+        $kontak->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Kontak $kontak)
-    {
-        //
+        toast('Data kontak berhasil dihapus.', 'success');
+        return redirect()->route('kontak.index');
     }
 }

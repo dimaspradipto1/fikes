@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\KontakController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,9 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
 
     // Resource User (index, create, store, show, edit, update, destroy)
     Route::resource('user', UserController::class);
+
+    // Resource Kontak (index, create, store, edit, update, destroy)
+    Route::resource('kontak', KontakController::class)->except(['show']);
 
     // Update Password — route tambahan di luar resource
     Route::get('user/{user}/update-password', [UserController::class, 'updatePasswordForm'])
