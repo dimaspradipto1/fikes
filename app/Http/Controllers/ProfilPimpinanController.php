@@ -2,64 +2,94 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\ProfilPimpinanDataTable;
+use App\Http\Requests\ProfilePimpinanRequest;
 use App\Models\ProfilPimpinan;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 
 class ProfilPimpinanController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Tampilkan daftar profil pimpinan dengan DataTables.
      */
-    public function index()
+    public function index(ProfilPimpinanDataTable $dataTable)
     {
-        //
+        return $dataTable->render('pages.profilpimpinan.index');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Tampilkan form tambah profil pimpinan.
      */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('pages.profilpimpinan.create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Simpan profil pimpinan baru ke database.
      */
-    public function store(Request $request)
+    public function store(ProfilePimpinanRequest $request): RedirectResponse
     {
-        //
+        $data = $request->validated();
+
+        // Handle upload foto
+        if ($request->hasFile('photo')) {
+            $data['url_photo'] = $request->file('photo')->store('profil-pimpinan', 'public');
+        }
+
+        unset($data['photo']);
+
+        ProfilPimpinan::create($data);
+
+        toast('Profil Pimpinan berhasil ditambahkan.', 'success');
+        return redirect()->route('profil-pimpinan.index');
     }
 
     /**
-     * Display the specified resource.
+     * Tampilkan form edit profil pimpinan.
      */
-    public function show(ProfilPimpinan $profilPimpinan)
+    public function edit(ProfilPimpinan $profilPimpinan): View
     {
-        //
+        return view('pages.profilpimpinan.edit', compact('profilPimpinan'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Simpan perubahan profil pimpinan.
      */
-    public function edit(ProfilPimpinan $profilPimpinan)
+    public function update(ProfilePimpinanRequest $request, ProfilPimpinan $profilPimpinan): RedirectResponse
     {
-        //
+        $data = $request->validated();
+
+        // Handle upload foto baru
+        if ($request->hasFile('photo')) {
+            if ($profilPimpinan->url_photo) {
+                Storage::disk('public')->delete($profilPimpinan->url_photo);
+            }
+            $data['url_photo'] = $request->file('photo')->store('profil-pimpinan', 'public');
+        }
+
+        unset($data['photo']);
+
+        $profilPimpinan->update($data);
+
+        toast('Profil Pimpinan berhasil diperbarui.', 'success');
+        return redirect()->route('profil-pimpinan.index');
     }
 
     /**
-     * Update the specified resource in storage.
+     * Hapus profil pimpinan dari database.
      */
-    public function update(Request $request, ProfilPimpinan $profilPimpinan)
+    public function destroy(ProfilPimpinan $profilPimpinan): RedirectResponse
     {
-        //
-    }
+        if ($profilPimpinan->url_photo) {
+            Storage::disk('public')->delete($profilPimpinan->url_photo);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ProfilPimpinan $profilPimpinan)
-    {
-        //
+        $profilPimpinan->delete();
+
+        toast('Profil Pimpinan berhasil dihapus.', 'success');
+        return redirect()->route('profil-pimpinan.index');
     }
 }

@@ -14,16 +14,17 @@ return new class extends Migration
         Schema::create('visi_misis', function (Blueprint $table) {
             $table->id();
             $table->text('visi')->nullable();
-            $table->text('misi_1')->nullable();
-            $table->text('misi_2')->nullable();
-            $table->text('misi_3')->nullable();
-            $table->text('misi_4')->nullable();
-            $table->text('misi_5')->nullable();
-            $table->text('tujuan_1')->nullable();
-            $table->text('tujuan_2')->nullable();
-            $table->text('tujuan_3')->nullable();
-            $table->text('tujuan_4')->nullable();
-            $table->text('tujuan_5')->nullable();
+            $table->text('misi')->nullable();
+            $table->text('tujuan')->nullable();
+            // $table->text('misi_2')->nullable();
+            // $table->text('misi_3')->nullable();
+            // $table->text('misi_4')->nullable();
+            // $table->text('misi_5')->nullable();
+            // $table->text('tujuan_1')->nullable();
+            // $table->text('tujuan_2')->nullable();
+            // $table->text('tujuan_3')->nullable();
+            // $table->text('tujuan_4')->nullable();
+            // $table->text('tujuan_5')->nullable();
             $table->timestamps();
         });
     }

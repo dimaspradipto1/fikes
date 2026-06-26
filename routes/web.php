@@ -2,8 +2,12 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KontakController;
+use App\Http\Controllers\ProfilPimpinanController;
 use App\Http\Controllers\SambutanDekanController;
+use App\Http\Controllers\SejarahIbnuSinaController;
+use App\Http\Controllers\StrukturController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VisiMisiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +40,17 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
 
     Route::post('sambutan-dekan/upload-image', [SambutanDekanController::class, 'uploadImage'])
         ->name('sambutan-dekan.uploadImage');
+
+    Route::resource('visi-misi', VisiMisiController::class)->except(['show']);
+
+    Route::resource('sejarah-ibnu-sina', SejarahIbnuSinaController::class)->except(['show']);
+
+    Route::post('sejarah-ibnu-sina/upload-image', [SejarahIbnuSinaController::class, 'uploadImage'])
+        ->name('sejarah-ibnu-sina.uploadImage');
+
+    Route::resource('struktur', StrukturController::class)->except(['show']);
+
+    Route::resource('profil-pimpinan', ProfilPimpinanController::class)->except(['show']);
 
 
     Route::get('user/{user}/update-password', [UserController::class, 'updatePasswordForm'])
